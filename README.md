@@ -17,8 +17,9 @@ El inicio de sesión usa las credenciales registradas en la base de datos del ba
 
 El backend Express está en `backend/` y la aplicación Vite reenvía las solicitudes `/api` a `http://localhost:4000`.
 
-1. Copia `backend/.env.example` a `backend/.env` y configura las credenciales de PostgreSQL y un secreto JWT.
-2. En una terminal, instala dependencias e inicia el backend:
+1. Copia `.env.example` a `.env` en la raíz y `backend/.env.example` a `backend/.env`.
+2. Configura en `backend/.env` las credenciales de PostgreSQL y un secreto JWT.
+3. En una terminal, instala dependencias e inicia el backend:
 
    ```bash
    cd backend
@@ -26,7 +27,7 @@ El backend Express está en `backend/` y la aplicación Vite reenvía las solici
    npm run dev
    ```
 
-3. En otra terminal, desde la raíz del proyecto, inicia el frontend:
+4. En otra terminal, desde la raíz del proyecto, inicia el frontend:
 
    ```bash
    npm install
