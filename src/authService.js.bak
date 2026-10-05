@@ -1,0 +1,50 @@
+﻿import axiosClient from '/src/axiosClient.js';
+
+// URL directo del servicio de login solicitado
+const LOGIN_URL = 'http://localhost:4000/api/accounts/login';
+
+/**
+ * credentials: { email: string, password: string } (o la forma que acepte tu API)
+ * Devuelve response.data tal como lo retorna la API.
+ * Guarda el token en localStorage si la respuesta contiene token/accessToken.
+ */
+export async function login(credentials) {
+  try {
+    // Se usa la instancia axiosClient para mantener headers comunes (y baseURL si se desea)
+    const response = await axiosClient.post(LOGIN_URL, credentials);
+    const data = response.data;
+
+    // Buscar token en algunos nombres comunes
+    const token = data?.token || data?.accessToken || data?.access_token;
+    if (token) {
+      localStorage.setItem('authToken', token);
+      // Ajustar header por defecto para futuras peticiones
+      axiosClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+
+    return data;
+  } catch (err) {
+    // Normalizar error para que el componente lo pueda manejar fácilmente
+    if (err.response) {
+      // Error desde el servidor
+      throw {
+        status: err.response.status,
+        data: err.response.data,
+        message: err.response.data?.message || err.response.statusText || err.message,
+      };
+    }
+    // Error de red u otro
+    throw { message: err.message };
+  }
+}
+
+export function logout() {
+  localStorage.removeItem('authToken');
+  delete axiosClient.defaults.headers.common['Authorization'];
+}
+
+// Inicializar Authorization header si hay token guardado al arrancar la app
+const existingToken = localStorage.getItem('authToken');
+if (existingToken) {
+  axiosClient.defaults.headers.common['Authorization'] = `Bearer ${existingToken}`;
+}

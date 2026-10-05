@@ -1,0 +1,74 @@
+.sales-chart__plot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  height: 240px;
+  padding-top: 30px;
+  border-bottom: 1px solid var(--color-border);
+  background-image: repeating-linear-gradient(
+    to top,
+    var(--color-border) 0,
+    var(--color-border) 1px,
+    transparent 1px,
+    transparent 48px
+  );
+}
+
+.sales-chart__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  height: 100%;
+  flex: 1;
+  max-width: 56px;
+}
+
+.sales-chart__bar {
+  width: 100%;
+  min-height: 6px;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(180deg, #6366f1, #a5b4fc);
+  position: relative;
+  cursor: default;
+  transition: filter 0.15s ease;
+}
+
+.sales-chart__col:hover .sales-chart__bar {
+  filter: brightness(1.08);
+}
+
+.sales-chart__bar-value {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-text);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.sales-chart__col:hover .sales-chart__bar-value {
+  opacity: 1;
+}
+
+.sales-chart__month {
+  font-size: 12px;
+  color: var(--color-text-faint);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .sales-chart__plot {
+    gap: 8px;
+  }
+}
